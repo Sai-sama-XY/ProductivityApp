@@ -13,7 +13,10 @@ import { useNavigationState } from '@react-navigation/native';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const state  = useNavigationState(state => state);
-  console.log(state)
+  const activeTabIndex = state?.index;
+  const currentTab = state?.routes[activeTabIndex]?.name
+  console.log(currentTab)
+
 
   return (
     <Tabs

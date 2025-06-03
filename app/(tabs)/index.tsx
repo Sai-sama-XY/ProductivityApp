@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, ScrollView, Button, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView,  TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Button } from "react-native-paper";
 
 
 function BudgetScreen() {
@@ -26,7 +27,7 @@ function BudgetScreen() {
       </View>
 
       
-
+    <Button icon="camera" onPress={()=>alert("Hi")} mode="contained">Hello</Button>
       {/* Summary Cards */}
       <View className="flex-col gap-3 justify- mb-4">
         <View className="bg-green-100  p-4 rounded-lg ">
