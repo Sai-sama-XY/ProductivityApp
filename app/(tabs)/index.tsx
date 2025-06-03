@@ -1,75 +1,71 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, ScrollView, Button, TouchableOpacity } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
+function BudgetScreen() {
+     const transactions = [
+    { id: 1, title: "Groceries", amount: -50, type: "expense" },
+    { id: 2, title: "Salary", amount: 1000, type: "income" },
+    { id: 3, title: "Rent", amount: -300, type: "expense" },
+  ];
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    <View className="flex-1 bg-white px-4 pt-12 ">
+      <StatusBar style="dark" />
+      {/* Header */}
+
+      {/* Balance Card */}
+      <View className="bg-indigo-500 rounded-xl p-6 mb-4 shadow-md flex gap-2">
+        <Text className="text-white text-sm">Savings</Text>
+        <Text className="text-white text-3xl font-bold">$650</Text>
+        <View className="flex gap-2 flex-row w-full items-center justify-center">
+          <TouchableOpacity className=" bg-green-300 rounded-xl p-2 flex-1 "><Text className="text-white text-center font-semibold">Add Budget</Text></TouchableOpacity>
+          <TouchableOpacity className="  bg-red-500 rounded-xl p-2 flex-1"><Text className=" text-white text-center font-semibold">Add Expenses</Text></TouchableOpacity>
+        </View>
+      </View>
+
+      
+
+      {/* Summary Cards */}
+      <View className="flex-col gap-3 justify- mb-4">
+        <View className="bg-green-100  p-4 rounded-lg ">
+          <Text className="text-green-800">Budget</Text>
+          <Text className="text-green-800 text-lg font-semibold">$1000</Text>
+        </View>
+        <View className="bg-red-100  p-4 rounded-lg ">
+          <Text className="text-red-800">Expense</Text>
+          <Text className="text-red-800 text-lg font-semibold">$350</Text>
+        </View>
+      </View>
+
+      {/* Transactions */}
+      <Text className="text-lg font-semibold text-gray-700 mb-2">Recent Transactions</Text>
+      <ScrollView className="flex-1">
+        {transactions.map((tx) => (
+          <View key={tx.id} className="flex-row justify-between items-center bg-gray-100 p-4 rounded-lg mb-2">
+            <View className="flex-row items-center">
+              <FontAwesome5
+                name={tx.type === "income" ? "arrow-down" : "arrow-up"}
+                size={16}
+                color={tx.type === "income" ? "green" : "red"}
+                className="mr-2"
+              />
+              <Text className="text-gray-700">{tx.title}</Text>
+            </View>
+            <Text className={`font-semibold ${tx.amount < 0 ? "text-red-500" : "text-green-500"}`}>
+              ${Math.abs(tx.amount)}
+            </Text>
+          </View>
+        ))}
+         <View className="flex flex-col gap-2">
+        <Text className="font-semibold">Random Shit</Text>
+        <TouchableOpacity className="w-full flex items-center p-4 bg-blue-300 rounded-2xl" onPress={()=>alert('You pressed Me')}><Text>Press Me</Text></TouchableOpacity>
+      </View>
+      </ScrollView>
+
+    </View>
+  )
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default BudgetScreen
