@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Button, Modal, Portal, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  Card,
+  Modal,
+  Portal,
+  Text,
+  TextInput,
+} from "react-native-paper";
+import { indigo500 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 function BudgetScreen() {
   const transactions = [
@@ -65,7 +73,7 @@ function BudgetScreen() {
       </View>
 
       {/* Summary Cards */}
-      <View className="flex-row  w-full mb-4 items-center justify-between" >
+      <View className="flex-row  w-full mb-4 items-center justify-between">
         <View className="bg-green-100  p-4 rounded-lg flex-1 max-w-52">
           <Text style={{ color: "green" }} variant="labelLarge">
             Total Income
@@ -76,48 +84,47 @@ function BudgetScreen() {
           <Text style={{ color: "red" }} variant="labelLarge">
             Total Expenses
           </Text>
-          <Text style={{ color: "purple" }}>$350</Text>
+          <Text>$350</Text>
         </View>
       </View>
 
       {/* Transactions */}
-      <Text className="text-lg font-semibold text-gray-700 mb-2">
-        Recent Transactions
-      </Text>
-      <ScrollView className="flex-1">
-        {transactions.map((tx) => (
-          <View
-            key={tx.id}
-            className="flex-row justify-between items-center bg-gray-100 p-4 rounded-lg mb-2"
-          >
-            <View className="flex-row items-center">
-              <FontAwesome5
-                name={tx.type === "income" ? "arrow-down" : "arrow-up"}
-                size={16}
-                color={tx.type === "income" ? "green" : "red"}
-                className="mr-2"
-              />
-              <Text className="text-gray-700">{tx.title}</Text>
-            </View>
-            <Text
-              className={`font-semibold ${
-                tx.amount < 0 ? "text-red-500" : "text-green-500"
-              }`}
+      <Card style={{ borderColor:"#6366f1", borderWidth:2, backgroundColor:"white"}}>
+        <Card.Title title="Recent Transactions" titleStyle={{color:"#6366f1"}} ></Card.Title>
+        <Card.Content>
+          {transactions.map((tx) => (
+            <View
+              key={tx.id}
+              style={{
+                backgroundColor: tx.amount < 0 ? "#fecaca" : "#bbf7d0",
+                borderRadius: 16
+              }}
+              className="flex-row justify-between items-center  p-4 rounded-lg mb-2 "
             >
-              ${Math.abs(tx.amount)}
-            </Text>
-          </View>
-        ))}
-        <View className="flex flex-col gap-2">
-          <Text className="font-semibold">Random Shit</Text>
-          <TouchableOpacity
-            className="w-full flex items-center p-4 bg-blue-300 rounded-2xl"
-            onPress={() => alert("You pressed Me")}
-          >
-            <Text>Press Me</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+              <View className="flex-row items-center">
+                <FontAwesome5
+                  name={tx.type === "income" ? "arrow-down" : "arrow-up"}
+                  size={16}
+                  color={tx.type === "income" ? "green" : "red"}
+                  className="mr-2"
+                />
+                <Text style={{
+                  color: tx.amount < 0 ? "red" : "green",
+                  fontWeight: "600", 
+                }}>{tx.title}</Text>
+              </View>
+              <Text
+                style={{
+                  color: tx.amount < 0 ? "red" : "green",
+                  fontWeight: "600", 
+                }}
+              >
+                ${Math.abs(tx.amount)}
+              </Text>
+            </View>
+          ))}
+        </Card.Content>
+      </Card>
 
       {/*Modals*/}
       <Portal>
