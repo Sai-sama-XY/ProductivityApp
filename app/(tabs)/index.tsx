@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, ScrollView, TouchableOpacity, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
 import MyChart from "@/components/ui/PieChart";
@@ -19,12 +19,12 @@ function BudgetScreen() {
     { id: 1, title: "Groceries", amount: -50, type: "expense" },
     { id: 2, title: "Salary", amount: 1000, type: "income" },
     { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
-    { id: 3, title: "Rent", amount: -300, type: "expense" },
+    { id: 4, title: "Rent", amount: -300, type: "expense" },
+    { id: 5, title: "Rent", amount: -300, type: "expense" },
+    { id: 6, title: "Rent", amount: -300, type: "expense" },
+    { id: 7, title: "Rent", amount: -300, type: "expense" },
+    { id: 8, title: "Rent", amount: -300, type: "expense" },
+    { id: 9, title: "Rent", amount: -300, type: "expense" },
   ];
 
   const [incomeModal, setIncomeModal] = useState(false);
@@ -110,8 +110,9 @@ function BudgetScreen() {
             title="Recent Transactions"
             titleStyle={{ color: "#6366f1", fontWeight:"bold"}}
           ></Card.Title>
-          <Card.Content>
-            {transactions.map((tx) => (
+          <Card.Content className="overflow">
+            <ScrollView>
+            {transactions.slice(0,3).map((tx) => (
               <View
                 key={tx.id}
                 style={{
@@ -146,6 +147,7 @@ function BudgetScreen() {
                 </Text>
               </View>
             ))}
+            </ScrollView>
           </Card.Content>
         </Card>
         <View style={{ alignItems: "center", marginTop: 20 }}></View>
